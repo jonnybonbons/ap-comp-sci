@@ -15,7 +15,8 @@ public class drawProjectemundo extends JApplet implements KeyListener, MouseList
     boolean cs = true; //clear screen
     int shape = 1; //1 for circle, 2 for rectangle
     int tellShape; //tellShape method for printing brush shape
-    boolean splash = true;
+    boolean splash = true; //defining splash screen
+    boolean protectTheText;
     Color c = Color.black;
     public void init()
     {
@@ -34,7 +35,7 @@ public class drawProjectemundo extends JApplet implements KeyListener, MouseList
         int h = getHeight();        
         //splash start
         if(splash == true) {
-            g.drawString("4U. by Jon Jon", getWidth() / 2 - 30, getHeight() / 2 - 30);
+            g.drawString("Drawing Thing by Jonathan (Jon Jon) Pham", getWidth() / 3, getHeight() / 2);
             splash = false;
             cs = true;
         }
@@ -44,12 +45,15 @@ public class drawProjectemundo extends JApplet implements KeyListener, MouseList
             cs = false;
         }
         g.setColor(c);
-        if (shape == 1) {
+        if (shape == 1 && protectTheText == false) {
             g.fillOval(m - r, n - r, 2 * r, 2 * r);
         }
-        if (shape == 2) {
+        if (shape == 2 && protectTheText == false) {
             g.fillRect(m - r, n - r, 2 * r, 2 * r);
         }
+        //white box to protect the text and stuff because getting legal bounds to work is a pain and i'm sleepy
+        g.setColor(Color.white);
+        g.fillRect(0, h - 90, 503, 75);
         //start color box for UI
         g.setColor(Color.lightGray);
         g.fillRect(0, getHeight() - 70, 430, 40);
@@ -110,16 +114,15 @@ public class drawProjectemundo extends JApplet implements KeyListener, MouseList
         g.setColor(Color.black);
         g.drawString("W", 263, getHeight() - 46);
         g.drawString("C", 298, getHeight() - 46);
-        g.drawString("Z", 333, getHeight() - 46);
-        g.drawString("X", 369, getHeight() - 46);
-        g.drawString("V", 404, getHeight() - 46);
-        g.drawString("Select box to change color, erase, or increase brush size; or press the labeled key", 0, getHeight() - 75);
-        //if (tellShape == 1) {
-        //    g.drawString("Round Brush", getWidth() / 2 - 10, getHeight() - 30);
-        //}
-        //if (tellShape == 2) {
-        //    g.drawString("Square Brush", getWidth() / 2 - 10, getHeight() - 30);
-        //}
+        g.drawString("Z", 335, getHeight() - 49);
+        g.drawString("+", 335, getHeight() - 40);
+        g.drawString("X", 370, getHeight() - 49);
+        g.drawString(" -", 370, getHeight() - 40);
+        g.drawString("V", 405, getHeight() - 49);
+        g.drawString("=", 405, getHeight() - 40);
+        g.drawString("Select box to change color, erase, or increase brush size; or press the labeled key", 3, getHeight() - 75);
+        g.drawString("Use these to change brush size!", 321, getHeight() - 17);
+        g.drawString("Press 'a' for a round brush or 's' for a square brush", 3, getHeight() - 17);
     }
 
     public void keyPressed(KeyEvent e) {}
@@ -185,60 +188,44 @@ public class drawProjectemundo extends JApplet implements KeyListener, MouseList
         e.getX() <= 35  &&
         e.getY() >= getHeight() - 60 &&
         e.getY() <= getHeight() - 40)
-        {
             c = Color.red;
-        }
         if (e.getX() >= 45 &&
-        e.getX() <= 80 &&
+        e.getX() <= 70 &&
         e.getY() >= getHeight() - 60 &&
         e.getY() <= getHeight() - 40)
-        {
             c = Color.blue;
-        }
-        if (e.getX() >= 90 &&
-        e.getX() <= 125 &&
+        if (e.getX() >= 80 &&
+        e.getX() <= 105 &&
         e.getY() >= getHeight() - 60 &&
         e.getY() <= getHeight() - 40)
-        {
             c = Color.green;
-        }
-        if (e.getX() >= 135 &&
-        e.getX() <= 170 &&
+        if (e.getX() >= 115 && //fix from here on - cyan on are moved to the right 1 box length
+        e.getX() <= 140 &&
         e.getY() >= getHeight() - 60 &&
         e.getY() <= getHeight() - 40)
-        {
             c = Color.cyan;
-        }
-        if (e.getX() >= 180 &&
-        e.getX() <= 215 &&
+        if (e.getX() >= 150 &&
+        e.getX() <= 175 &&
         e.getY() >= getHeight() - 60 &&
         e.getY() <= getHeight() - 40)
-        {
             c = Color.magenta;
-        }
-        if (e.getX() >= 225 &&
-        e.getX() <= 260 &&
+        if (e.getX() >= 185 &&
+        e.getX() <= 210 &&
         e.getY() >= getHeight() - 60 &&
         e.getY() <= getHeight() - 40)
-        {
             c = Color.yellow;
-        }
-        if (e.getX() >= 270 &&
-        e.getX() <= 305 &&
+        if (e.getX() >= 220 &&
+        e.getX() <= 245 &&
         e.getY() >= getHeight() - 60 &&
         e.getY() <= getHeight() - 40)
-        {
             c = Color.black;
-        } 
-        if (e.getX() >= 315 &&
-        e.getX() <= 350 &&
+        if (e.getX() >= 255 &&
+        e.getX() <= 280 &&
         e.getY() >= getHeight() - 60 &&
         e.getY() <= getHeight() - 40)
-        {
             c = Color.white;
-        }
-        if (e.getX() >= 360 &&
-        e.getX() <= 395 &&
+        if (e.getX() >= 290 &&
+        e.getX() <= 315 &&
         e.getY() >= getHeight() - 60 &&
         e.getY() <= getHeight() - 40)
         {
@@ -247,49 +234,24 @@ public class drawProjectemundo extends JApplet implements KeyListener, MouseList
             n = -getHeight();
             repaint();
         }
-        if (e.getX() >= 405 &&
-        e.getX() <= 440 &&
+        if (e.getX() >= 325 &&
+        e.getX() <= 350 &&
         e.getY() >= getHeight() - 60 &&
         e.getY() <= getHeight() - 40)
-        {
             r = r+5;
-        }
-        if (e.getX() >= 450 &&
-        e.getX() <= 485 &&
+        if (e.getX() >= 360 &&
+        e.getX() <= 385 &&
         e.getY() >= getHeight() - 60 &&
         e.getY() <= getHeight() - 40)
-        {
             r = r-5;
-        }
-        if (e.getX() >= 495 &&
-        e.getX() <= 530 &&
+        if (e.getX() >= 395 &&
+        e.getX() <= 420 &&
         e.getY() >= getHeight() - 60 &&
         e.getY() <= getHeight() - 40)
-        {
             r = 5;
-        }
     }
 
-    public void mousePressed(MouseEvent e) {
-        //         if (e.getX() >= 0 &&
-        //         e.getX() <= getWidth() &&
-        //         e.getY() >= 0 &&
-        //         e.getY() < getHeight() - 50);
-        //         {
-        //             m = e.getX();
-        //             n = e.getY();
-        //             repaint();
-        //         }
-        //         if (e.getX() > 480 &&
-        //         e.getX() <= getWidth() &&
-        //         e.getY() >= 0 &&
-        //         e.getY() <= getHeight());
-        //         {
-        //             m = e.getX();
-        //             n = e.getY();
-        //             repaint();
-        //         }
-    }
+    public void mousePressed(MouseEvent e) {}
 
     public void mouseReleased(MouseEvent e) {}
 
